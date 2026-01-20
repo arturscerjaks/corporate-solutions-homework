@@ -10,13 +10,22 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminOnly
 {
     /**
-     * Handle an incoming request.
+     * Deny if not admin for both WEB and API routes
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Request  $request
+     * @param  Closure $next
+     * @return Response
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Check if user is logged in and is admin
         if (!Auth::check() || !Auth::user()->is_admin) {
+            // Return JSON if it's an API request
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json(['message' => 'Admins only.'], 403);
+            }
+
+            // Otherwise use web abort
             abort(403, 'Admins only.');
         }
 
