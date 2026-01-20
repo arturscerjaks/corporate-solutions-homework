@@ -1,20 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Product')
+@section('title', 'Create Product')
 
 @section('content')
 <div class="max-w-3xl mx-auto px-4 py-6">
 
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-semibold">
-            Edit Product
-        </h1>
-
+        <h1 class="text-2xl font-semibold">Create Product</h1>
         <a
-            href="{{ url()->previous() }}"
+            href="{{ route('products.index') }}"
             class="py-2 px-4 rounded-xs bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-black dark:text-white font-semibold"
         >
-            Back</a>
+            Back
+        </a>
     </div>
 
     @if ($errors->any())
@@ -29,26 +27,23 @@
 
     <form
         method="POST"
-        action="{{ route('products.update', $product) }}"
+        action="{{ route('products.store') }}"
         class="bg-gray-100 dark:bg-gray-700 border border-black dark:border-white rounded-xs p-6 space-y-5 text-black dark:text-white"
     >
-        @method('PUT')
-
         @include('products._form')
 
         <div class="flex justify-end gap-3 pt-4">
             <a
-                href="{{ route('products.show', $product) }}"
+                href="{{ route('products.index') }}"
                 class="py-2.5 px-4 rounded-xs bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-black dark:text-white font-semibold"
             >
-                Cancel
-            </a>
+                Cancel</a>
 
             <button
                 type="submit"
                 class="py-2.5 px-4 rounded-xs bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-black font-semibold hover:cursor-pointer"
             >
-                Save Changes
+                Create Product
             </button>
         </div>
     </form>
