@@ -26,5 +26,9 @@ class DatabaseSeeder extends Seeder
             'password' => 'Password123!',
             'is_admin' => true
         ]);
+
+        $this->call([
+            ProductSeeder::class
+        ]);
     }
 }
