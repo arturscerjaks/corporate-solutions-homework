@@ -1,0 +1,26 @@
+meta {
+  name: Get Product Audit Trail
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{BASE_URL}}/api/product_audit?page_size=20&order_by=created_at&order_dir=desc
+  body: none
+  auth: bearer
+}
+
+params:query {
+  page_size: 20
+  order_by: created_at
+  order_dir: desc
+}
+
+auth:bearer {
+  token: {{BEARER_TOKEN}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

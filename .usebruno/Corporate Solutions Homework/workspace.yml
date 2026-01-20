@@ -1,0 +1,12 @@
+opencollection: 1.0.0
+info:
+  name: "Corporate Solutions Homework"
+  type: workspace
+
+collections:
+  - name: "homework"
+    path: "collections\\homework"
+
+specs:
+
+docs: ''
