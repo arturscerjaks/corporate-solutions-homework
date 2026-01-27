@@ -33,6 +33,11 @@
         >
     </div>
 
+    @error('email')
+        <p class="text-red-600">{{ $message }}</p>
+    @enderror
+
+
     <button
         type="submit"
         class="w-full py-2.5 rounded-xs bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-black font-semibold hover:cursor-pointer">
