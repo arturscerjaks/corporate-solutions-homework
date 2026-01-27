@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\ProductAudit;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -67,8 +65,7 @@ class ProductController extends Controller
             'price' => ['required', 'numeric', 'min:0'],
         ]);
 
-        $product = Product::create($validated);
-        $this->logAudit($product, 'create');
+        Product::create($validated);
 
         return redirect()
             ->route('products.index')
@@ -102,7 +99,6 @@ class ProductController extends Controller
         ]);
 
         $product->update($validated);
-        $this->logAudit($product, 'update', $validated);
 
         return redirect()
             ->route('products.index')
@@ -117,29 +113,11 @@ class ProductController extends Controller
      */
     public function destroy(Product $product): RedirectResponse
     {
-        $this->logAudit($product, 'delete');
+
         $product->delete();
 
         return redirect()
             ->route('products.index')
             ->with('success', 'Product deleted successfully.');
-    }
-
-    /**
-     * Should log all actions done to products other than retrieving
-     *
-     * @param Product $product
-     * @param string $action
-     * @param array $changes
-     * @return void
-     */
-    protected function logAudit(Product $product, string $action, ?array $changes = null)
-    {
-        ProductAudit::create([
-            'product_id' => $product?->id,
-            'user_id' => Auth::id(),
-            'action' => $action,
-            'changes' => $changes,
-        ]);
     }
 }
