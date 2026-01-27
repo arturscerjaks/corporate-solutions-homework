@@ -18,7 +18,7 @@ class AuthController extends Controller
      *
      * @return View|RedirectResponse
      */
-    public function showLogin()
+    public function showLogin(): RedirectResponse|View
     {
         if (Auth::check()) {
             return redirect('/products');
@@ -33,7 +33,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
@@ -46,7 +46,6 @@ class AuthController extends Controller
             return redirect()->intended('/products');
         }
 
-        // Telling which is wrong would be bad for security
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
@@ -58,7 +57,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
         $request->session()->invalidate();
